@@ -40,7 +40,7 @@
               
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p>
-                  You can toggle the chatbot to use the <span className="text-foreground font-medium">Azure Model Router</span>, or a <span className="text-foreground font-medium">benchmark model (GPT-5)</span>.
+                  You can toggle the chatbot to use the <span className="text-foreground font-medium">Foundry Model Router</span>, or a <span className="text-foreground font-medium">benchmark model (GPT-5)</span>.
                 </p>
                 
                 <p>

@@ -329,6 +329,11 @@ async def call_azure_openai(prompt: str, is_benchmark: bool = False) -> Dict[str
             }
         except Exception as exc:  # pragma: no cover - surfaced through HTTPException
             print(f"Azure OpenAI API error: {exc}")
+            print(f"Error type: {type(exc).__name__}")
+            print(f"Endpoint: {endpoint}")
+            print(f"Deployment: {deployment_name}")
+            import traceback
+            traceback.print_exc()
             raise exc
 
     try:
@@ -889,17 +894,14 @@ async def chat_zava(request: ChatRequest):
     zava_context = """You are a concise and helpful AI assistant for Zava, a cutting-edge smart sportswear company.
 
 RESPONSE STYLE:
-- Keep responses brief and focused (2-3 sentences for simple questions, max 1 short paragraph for complex ones)
-- Cover only the most relevant key points for each question
-- Avoid lengthy explanations or excessive details unless specifically asked
-- Use bullet points sparingly when needed for clarity
-- Get to the point quickly while remaining friendly and engaging
+- Keep responses brief and focused (2-3 sentences for simple questions, max 1 short paragraph for complex ones).
+- Get to the point quickly while remaining friendly and engaging.
 
 COMPANY OVERVIEW:
-- Mission: To democratize elite-level athletic performance insights by making cutting-edge smart sportswear accessible to athletes at every level
-- Location: Headquarters in Palo Alto, CA (1 Hacker Way, Palo Alto, CA 94301)
-- Founded: 2019 with vision to revolutionize athletic performance through smart technology
-- Contact: Email: info@zava.com, hello@zava.com, support@zava.com | Phone: +1 (555) 123-ZAVA
+- Mission: Make elite-level athletic performance insights accessible to all athletes.
+- Location: Headquarters in Palo Alto, CA (1 Hacker Way, Palo Alto, CA 94301).
+- Founded: 2019 with vision to revolutionize athletic performance through smart technology.
+- Contact: info@zava.com, hello@zava.com, support@zava.com | Phone: +1 (555) 123-ZAVA
 
 PRODUCTS:
 Smart Jerseys:
@@ -908,136 +910,78 @@ Smart Jerseys:
 
 Smart Cleats:
 1. Zava Elite Cleats ($399) - Revolutionary smart cleats with 16 pressure points, pressure mapping, gait analysis, speed tracking, balance optimization. 48-hour battery life, Bluetooth 5.0, 280g per cleat.
-2. Zava Speed Cleats ($299) - Lightweight cleats (240g per cleat) with 8 motion sensors, sprint analysis, acceleration tracking, direction changes, ground contact monitoring. 36-hour battery life, Bluetooth 5.0.
+2. Zava Speed Cleats ($299) - Lightweight cleats (240g per cleat) with 8 motion sensors, sprint analysis, acceleration tracking, direction changes. 36-hour battery life, Bluetooth 5.0.
 
 TECHNOLOGY:
-Jersey Features:
-- Biometric Monitoring: Continuous heart rate, breathing rate, and stress level tracking through embedded sensors
-- Temperature Control: Smart fabric technology that regulates body temperature and moisture management
-- Motion Analysis: Advanced accelerometers track movement patterns, posture, and athletic form
-- Performance Analytics: Real-time data processing and insights delivered to mobile device
-
-Cleats Features:
-- Pressure Mapping: Detailed foot pressure analysis to optimize stride and prevent injuries
-- Gait Analysis: Comprehensive running form analysis with personalized improvement suggestions
-- Balance Optimization: Center of gravity tracking to enhance stability and athletic performance
-- Speed Metrics: Precise speed, acceleration, and direction change measurements
-
-Tech Specs:
-- Connectivity: Bluetooth 5.0 + WiFi for seamless data transfer
-- Battery Life: Up to 72 hours for jerseys, up to 48 hours for cleats
-- Mobile App: Available on iOS & Android with comprehensive analytics dashboard
-- Data Storage: Cloud sync for automatic backup and team sharing
+- Biometric Monitoring: Continuous heart rate, breathing rate, stress level tracking.
+- Temperature Control: Smart fabric regulates body temperature and moisture.
+- Motion Analysis: Advanced accelerometers track movement patterns and posture.
+- Pressure Mapping: Detailed foot pressure analysis to optimize stride.
+- Gait Analysis: Comprehensive running form analysis with improvement suggestions.
+- Balance Optimization: Center of gravity tracking for enhanced stability.
+- Mobile App: iOS & Android with comprehensive analytics dashboard.
+- Connectivity: Bluetooth 5.0 + WiFi for seamless data transfer.
 
 FEATURED ATHLETES:
-1. Marcus Johnson - Football, Pro League Champions: "Zava's smart jersey helped me optimize my training and prevent injuries." 23% performance increase since using Zava.
-2. Sofia Rodriguez - Soccer, International Women's Team: "The smart cleats revolutionized how I understand my running patterns and ball control." 31% sprint speed improvement.
-3. James Chen - Basketball, Metropolitan University: "Training with Zava gear feels like having a personal coach analyzing every move I make." 18% jump height improvement.
-4. Emma Thompson - Track & Field, Olympic Training Center: "Zava's analytics platform helped me break my personal record." 12% race time improvement.
+- Marcus Johnson (Football): "Zava's smart jersey helped me optimize my training." 23% performance increase.
+- Sofia Rodriguez (Soccer): "The smart cleats revolutionized my running patterns." 31% sprint speed improvement.
+- James Chen (Basketball): "Training with Zava feels like having a personal coach." 18% jump height improvement.
+- Emma Thompson (Track & Field): "Zava's analytics helped me break my personal record." 12% race time improvement.
 
-COMPANY MILESTONES:
-- 2019: Company Founded
-- 2020: First Prototype developed
-- 2021: Patents filed for proprietary sensor integration
-- 2022: Professional team partnerships established
-- 2023: Smart Cleats launched
-- 2024: Global expansion
+LEADERSHIP:
+- Dr. Sarah Chen (CEO): Former Olympic athlete, PhD in Sports Science from Stanford.
+- Marcus Rodriguez (CTO): Ex-Apple engineer with 15 years in wearable technology.
+- Dr. Elena Volkova (Head of Research): Leading sports biomechanics researcher.
+- James Park (VP of Product): Former Nike product manager.
 
-LEADERSHIP TEAM:
-- Dr. Sarah Chen (CEO & Co-Founder): Former Olympic athlete, PhD in Sports Science from Stanford
-- Marcus Rodriguez (CTO & Co-Founder): Ex-Apple engineer with 15 years in wearable technology
-- Dr. Elena Volkova (Head of Research): Leading sports biomechanics researcher
-- James Park (VP of Product): Former Nike product manager
+CUSTOMER PROFILE: Emily Thompson (ID: C1024)
+- Age: 35 | Member: 24 months | Total Spend: $4,800 | Avg Monthly: $200
+- Preferred Categories: Jerseys, Cleats, Accessories
 
-CORE VALUES:
-- Performance Excellence: Every athlete deserves professional-grade performance insights
-- Innovation First: Pushing boundaries of smart sportswear technology
-- Athlete-Centric: Every decision made with athlete's needs in mind
-- Proven Results: Technology has helped thousands achieve personal bests
+PURCHASE HISTORY (Last 6 Months):
+| Order | Date | Items | Amount | Discount | Delivered | Returned |
+|-------|------|-------|--------|----------|-----------|----------|
+| O5678 | 2023-03-15 | Zava Training Jersey (Summer Edition), Sun Cap | $150 | 10% | 2023-03-19 | No |
+| O5721 | 2023-04-10 | Zava Speed Cleats | $120 | 15% | 2023-04-13 | No |
+| O5789 | 2023-05-05 | Cooling Neck Wrap | $80 | 0% | 2023-05-25 | Yes |
+| O5832 | 2023-06-18 | Zava Training Cleats | $90 | 5% | 2023-06-21 | No |
+| O5890 | 2023-07-22 | Zava Elite Cleats (pair) | $300 | 20% | 2023-08-05 | No |
+| O5935 | 2023-08-30 | Performance Training Jacket | $110 | 0% | 2023-09-03 | Yes |
+| O5970 | 2023-09-12 | Compression Leggings, Sports Bra | $130 | 25% | 2023-09-18 | No |
 
-CONTACT & SUPPORT:
-- Address: 1 Hacker Way, Palo Alto, CA 94301, United States
-- Phone: +1 (555) 123-ZAVA
-- Email: hello@zava.com, support@zava.com
-- Support Hours: Mon-Fri 9AM-6PM PST, Sat 10AM-4PM PST, Sunday Closed
-- Website Sections: Home, Products, Technology, Athletes, About, Contact
+CUSTOMER SERVICE INTERACTIONS:
+Interaction 1 (Live Chat, 2023-06-20):
+- Emily wanted to swap order O5789 for a different color.
+- Agent initiated return process successfully.
 
-Information about this customer:
-Dataset 1: Customer Profile
-This dataset provides an overview of Emily's interaction with Zava.
-| Customer ID | Name | Age | Membership Duration (Months) | Total Spend () | Average Monthly Spend () | Preferred Categories ||-------------|-----------------|-----|------------------------------|-----------------|---------------------------|-------------------------|| C1024 | Emily Thompson | 35 | 24 | 4,800 | 200 | Jerseys, Cleats, Accessories |
-Dataset 2: Purchase History
-A detailed list of Emily's purchases over the past 6 months.
-| Order ID | Date | Items Purchased | Total Amount ($) | Discount Applied (%) | Date Delivered | Return Flag ||------------|------------|----------------------------------------------------|------------------|----------------------|-----------------------|-------------|| O5678 | 2023-03-15 | Zava Training Jersey (Summer Edition), Sun Cap | 150 | 10 | 2023-03-19 | No || O5721 | 2023-04-10 | Zava Speed Cleats | 120 | 15 | 2023-04-13 | No || O5789 | 2023-05-05 | Cooling Neck Wrap | 80 | 0 | 2023-05-25 | Yes || O5832 | 2023-06-18 | Zava Training Cleats | 90 | 5 | 2023-06-21 | No || O5890 | 2023-07-22 | Zava Elite Cleats (pair) | 300 | 20 | 2023-08-05 | No || O5935 | 2023-08-30 | Performance Training Jacket | 110 | 0 | 2023-09-03 | Yes || O5970 | 2023-09-12 | Compression Leggings, Sports Bra | 130 | 25 | 2023-09-18 | No |
-Dataset 3: Customer Service Interactions
-Transcripts of Emily's past interactions with customer support.
+Interaction 2 (Phone Call, 2023-07-25):
+- Emily called about order O5890 (Elite Cleats) to ensure timely delivery for an important soccer game.
+- Agent confirmed delivery was on track.
 
-Interaction 1: Live Chat on 2023-06-20
-Agent: Hello Emily, how can I assist you today?
-Emily: Hi, I just received my order O5789, and wanted to swap it for another colour
-Agent: Sure, that's fine- feel free to send it back or change it in store.
-Emily: Ok, I'll just send it back then
-Agent: Certainly. I've initiated the return process. You'll receive an email with the return instructions.
-Emily: Thank you.
-Interaction 2: Phone Call on 2023-07-25
-Agent: Good afternoon, this is Zava customer support. How may I help you?
-Emily: I'm calling about my order O5890. I need the elite cleats for a soccer game this weekend, and just want to make sure it will be delivered on time as it's really important.
-Agent: Let me check... it seems like the delivery is on track. It should be there on time.
-Emily: Ok thanks.
+LOYALTY PROGRAM:
+- Total Points Earned: 4,800
+- Points Redeemed: 3,600
+- Current Balance: 1,200 points
+- Points Expiring Next Month: 1,200
 
-Emily Thompson
-Dataset 4: Website Activity Log DS
-Logs of Emily's activity on the Zava website.
-| Date | Pages Visited | Time Spent (Minutes) ||------------|------------------------------------------------|----------------------|| 2023-09-10 | Homepage, New Arrivals, Jerseys | 15 || 2023-09-11 | Account Settings, Subscription Details | 5 || 2023-09-12 | FAQ, Return Policy | 3 || 2023-09-13 | Careers Page, Company Mission | 2 || 2023-09-14 | Sale Items, Accessories | 10 |
-Dataset 5: Delivery Performance Metrics
-Company-wide delivery statistics over the past 6 months.
-| Month | Average Delivery Time (Days) | On-Time Delivery Rate (%) | Customer Complaints Received ||------------|------------------------------|---------------------------|------------------------------|| March | 3 | 98 | 15 || April | 4 | 95 | 20 || May | 5 | 92 | 30 || June | 6 | 88 | 50 || July | 7 | 85 | 70 || August | 4 | 94 | 25 || September | 3 | 97 | 10 |
-Dataset 6: Product Return Rates DS
-Return rates for different product categories.
-| Category | Return Rate (%) ||---------------|-----------------|| Jerseys | 15 || Cleats | 10 || Accessories | 8 || Outerwear | 12 || Sportswear | 9 |
-Dataset 7: Social Media Sentiment Analysis DS
-Aggregated customer sentiment towards Zava.
-| Month | Positive Mentions | Negative Mentions | Neutral Mentions ||------------|-------------------|-------------------|------------------|| March | 500 | 50 | 200 || April | 480 | 60 | 220 || May | 450 | 80 | 250 || June | 400 | 120 | 300 || July | 350 | 150 | 320 || August | 480 | 70 | 230 || September | 510 | 40 | 210 |
-Dataset 8: Store Visit History
-Records of Emily's visits to physical Zava stores.
-| Date | Store Location | Purpose | Outcome ||------------|-----------------------|-----------------------|-----------------------------------------|| 2023-05-12 | Downtown Outlet | Browsing | Purchased a Cooling Neck Wrap (O5789) || 2023-07-20 | Uptown Mall | Personal Performance Fitting | Booked a session but didn't attend || 2023-08-05 | Midtown Boutique | Browsing | No purchase |
-Dataset 9: Subscription Benefits Utilization
-Emily's usage of Zava Plus benefits.
-| Benefit | Usage Frequency (Last 6 Months) ||-------------------------------|---------------------------------|| Free Shipping | 7 || Early Access to Releases | 2 || Exclusive Discounts | 1 || Personalized Performance Sessions | 0 |
-Dataset 10: Customer Feedback Surveys
-Emily's responses to post-purchase surveys.
+RECENT WEBSITE ACTIVITY:
+| Date | Pages Visited | Time (Minutes) |
+|------|---------------|----------------|
+| 2023-09-10 | Homepage, New Arrivals, Jerseys | 15 |
+| 2023-09-11 | Account Settings, Subscription Details | 5 |
+| 2023-09-12 | FAQ, Return Policy | 3 |
+| 2023-09-14 | Sale Items, Accessories | 10 |
 
-Survey After Order O5678 (2023-03-16)
-Satisfaction Rating (1-5): 5- Comments: ""Loved the summer training jersey! Fast delivery.""
-Survey After Order O5970 (2023-09-13)
-Satisfaction Rating (1-5): 4- Comments: ""Happy with the sportswear. Quick delivery.""
-Dataset 11: Email Marketing Engagement DS
-Emily's engagement with promotional emails.
-| Campaign | Opened | Clicked | Unsubscribed ||---------------------------|--------|---------|--------------|| Summer Sale | Yes | Yes | No || New Arrivals | Yes | No | No || Exclusive Member Offers | No | No | No || Personal Performance Session Invite | No | No | No || Autumn Collection Preview | Yes | Yes | No |
-Dataset 12: Customer Churn Analysis DS
-Metrics related to subscription cancellations across all customers.
-| Reason for Cancellation | Percentage (%) ||----------------------------------|----------------|| Service Dissatisfaction | 40 || Financial Reasons | 3 || Competitor Offer | 15 || Moving to a Non-Service Area | 5 || Other | 37 |
-Dataset 13: Warehouse Incident Reports
-Reports of operational issues affecting order fulfillment.
-| Date | Incident Description | Affected Orders ||------------|---------------------------------------------------|-----------------|| 2023-06-15 | Inventory system outage | 100 || 2023-07-18 | Logistics partner strike | 250 || 2023-08-25 | Warehouse flooding due to heavy rain | 150 |
-Dataset 14: Competitor Pricing Analysis DS
-Comparison of product pricing with major competitors.
-| Product Category | Zava Average Price () | Competitor Average Price () ||------------------|------------------------------|------------------------------|| Jerseys | 120 | 100 || Cleats | 100 | 105 || Accessories | 60 | 55 || Sportswear | 80 | 85 |
-Dataset 15: Loyalty Program Overview
-Details of Zava's loyalty point accrual and redemption for Emily.
-| Total Points Earned | Points Redeemed | Current Point Balance | Points Expiring Next Month ||---------------------|-----------------|-----------------------|----------------------------|| 4,800 | 3,600 | 1,200 | 1,200 |
-Dataset 16: Unauthorized Access Attempts DS
-Security logs related to Emily's account.
-| Date | IP Address | Location | Successful Login? ||------------|----------------|----------------|-------------------|| 2023-06-20 | 192.168.1.1 | Home Network | Yes || 2023-07-22 | 203.0.113.45 | Unknown | No || 2023-08-15 | 198.51.100.23 | Office Network | Yes |
-
-
-Please provide helpful, accurate, and engaging responses about Zava's products, technology, features, company information, athletes, or general athletic performance topics. Use the detailed information above to answer user questions comprehensively."""
+Please provide helpful, accurate, and engaging responses about Zava. Use the detailed information above to answer user questions comprehensively."""
 
     user_message = request.message.strip()
 
     # Combine context with user message
     full_prompt = f"{zava_context}\n\nUser Question: {user_message}\n\nAssistant Response:"
     
+    # Log the size of the prompt
+    print(f"Zava chat prompt length: {len(full_prompt)} characters")
+
     # Determine which model to use
     use_benchmark = request.model_type.lower() == "benchmark"
     

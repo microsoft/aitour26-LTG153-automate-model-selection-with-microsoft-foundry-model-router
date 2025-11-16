@@ -21,7 +21,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center space-y-4 text-center">
             <div className="space-y-2">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-gray-900">
-                Azure Model Router
+                Microsoft Foundry Model Router
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-600 md:text-xl">
                 Intelligently select the best LLM for every prompt. Save costs while maintaining quality by routing requests to the most suitable model.
@@ -79,7 +79,7 @@ export default function HomePage() {
                   allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
                   referrerPolicy="strict-origin-when-cross-origin" 
                   style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}} 
-                  title="Azure Model Router"
+                  title="Foundry Model Router"
                 />
               </div>
             </div>

@@ -20,7 +20,7 @@
       "output_per_1m": 0.40,
       "description": "GPT-5-nano 2025-08-07 Global standard (GA)"
     },
-    "gpt-5-chat-latest": {
+    "gpt-5-chat-2025-08-07": {
       "input_per_1m": 1.25,
       "output_per_1m": 10.00,
       "description": "GPT-5-chat 2025-08-07 Global standard (Preview)"
@@ -45,9 +45,44 @@
       "output_per_1m": 4.40,
       "description": "o4-mini 2025-04-16 Global standard (GA)"
     },
+    "gpt-4o-2024-11-20": {
+      "input_per_1m": 2.50,
+      "output_per_1m": 10.00,
+      "description": "GPT-4o-2024-11-20 Global standard (GA)"
+    },
+    "gpt-4o-mini-2024-07-18": {
+      "input_per_1m": 0.15,
+      "output_per_1m": 0.60,
+      "description": "GPT-4o-mini 2024-07-18 Global standard (GA)"
+    },
+    "Llama-4-Maverick-17B-128E-Instruct-FP8": {
+      "input_per_1m": 0.25,
+      "output_per_1m": 1.00,
+      "description": "Llama-4-Maverick-17B-128E-Instruct-FP8 Global standard (GA)"
+    },
+    "gpt-oss-120b": {
+      "input_per_1m": 0.15,
+      "output_per_1m": 0.60,
+      "description": "gpt-oss-120b Global standard (GA)"
+    },
+    "grok-4-fast-reasoning": {
+      "input_per_1m": 0.43,
+      "output_per_1m": 1.73,
+      "description": "grok-4-fast-reasoning Global standard (GA)"
+    },
+    "grok-4": {
+      "input_per_1m": 5.50,
+      "output_per_1m": 27.50,
+      "description": "grok-4 Global standard (GA)"
+    },
+    "DeepSeek-V3.1": {
+      "input_per_1m": 1.23,
+      "output_per_1m": 4.94,
+      "description": "DeepSeek-V3.1 Global standard (GA)"
+    },
     "default": {
-      "input_per_1m": 5.00,
-      "output_per_1m": 15.00,
+      "input_per_1m": 1.00,
+      "output_per_1m": 5.00,
       "description": "Default fallback pricing"
     }
   }

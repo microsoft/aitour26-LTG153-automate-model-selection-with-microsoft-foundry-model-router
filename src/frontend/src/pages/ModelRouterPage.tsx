@@ -339,6 +339,75 @@ export default function ModelRouterPage() {
     setAccuracyComparison(null)
   }
 
+  const handleRunAccuracyComparison = async () => {
+    if (!routerResult || !benchmarkResult) return
+    
+    setAccuracyLoading(true)
+    
+    // Check if offline mode and we have replay data
+    if (offlineMode && selectedScenario) {
+      const modelRouterData = replayData.modelRouterScenarios as any
+      const departmentData = modelRouterData[selectedDepartment]
+      const scenarioData = departmentData?.[selectedScenario.id]
+      
+      if (scenarioData?.accuracy) {
+        setTimeout(() => {
+          setAccuracyComparison({
+            scenario_id: selectedScenario.id,
+            router: {
+              model_type: scenarioData.router.model,
+              output: scenarioData.router.output,
+              prompt_tokens: scenarioData.router.promptTokens,
+              completion_tokens: scenarioData.router.completionTokens,
+              total_tokens: scenarioData.router.totalTokens,
+              accuracy_evaluation: {
+                score: scenarioData.accuracy.router.score,
+                reasoning: scenarioData.accuracy.router.reasoning,
+                strengths: scenarioData.accuracy.router.strengths,
+                weaknesses: scenarioData.accuracy.router.weaknesses,
+                model_evaluated: scenarioData.router.model
+              }
+            },
+            benchmark: {
+              model_type: scenarioData.benchmark.model,
+              output: scenarioData.benchmark.output,
+              prompt_tokens: scenarioData.benchmark.promptTokens,
+              completion_tokens: scenarioData.benchmark.completionTokens,
+              total_tokens: scenarioData.benchmark.totalTokens,
+              accuracy_evaluation: {
+                score: scenarioData.accuracy.benchmark.score,
+                reasoning: scenarioData.accuracy.benchmark.reasoning,
+                strengths: scenarioData.accuracy.benchmark.strengths,
+                weaknesses: scenarioData.accuracy.benchmark.weaknesses,
+                model_evaluated: scenarioData.benchmark.model
+              }
+            },
+            timing: {
+              response_generation_ms: scenarioData.benchmark.responseTimeMs,
+              accuracy_evaluation_ms: 500,
+              total_ms: scenarioData.benchmark.responseTimeMs + 500
+            }
+          })
+          setAccuracyLoading(false)
+        }, 500)
+        return
+      }
+    }
+    
+    // Live mode: call API
+    await apiWrapper(
+      () => modelRouterApi.accuracyComparison(prompt, groundTruth || undefined),
+      {
+        onSuccess: (data) => {
+          setAccuracyComparison(data)
+        },
+        successMessage: '',
+        errorMessage: 'Failed to run accuracy comparison',
+        onFinally: () => setAccuracyLoading(false)
+      }
+    )
+  }
+
   const handleSubmit = async () => {
     if (!prompt.trim()) return
 
@@ -349,11 +418,6 @@ export default function ModelRouterPage() {
     setRouterLoading(true)
     setBenchmarkLoading(true)
     setIsLoading(true)
-
-    // Check if we should run accuracy analysis:
-    // - Either it's a pre-built scenario, OR
-    // - Custom ground truth was provided
-    const shouldRunAccuracy = selectedScenario !== null || groundTruth.trim().length > 0
 
     // Check if offline mode is enabled and we have replay data
     if (offlineMode && selectedScenario) {
@@ -546,26 +610,6 @@ export default function ModelRouterPage() {
     Promise.all([routerPromise, benchmarkPromise])
       .then(() => {
         setIsLoading(false)
-        
-        // After both responses complete, automatically trigger accuracy evaluation 
-        // if it's a pre-built scenario OR custom ground truth was provided
-        if (shouldRunAccuracy) {
-          console.log('🎯 Triggering automatic accuracy evaluation...')
-          setAccuracyLoading(true)
-          
-          apiWrapper(
-            () => modelRouterApi.accuracyComparison(prompt, groundTruth || undefined),
-            {
-              onSuccess: (data) => {
-                setAccuracyComparison(data)
-                console.log('✅ Accuracy evaluation completed')
-              },
-              successMessage: '',
-              errorMessage: '',
-              onFinally: () => setAccuracyLoading(false)
-            }
-          )
-        }
       })
       .catch(() => {
         setIsLoading(false)
@@ -607,9 +651,9 @@ export default function ModelRouterPage() {
       {/* Header */}
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2 mb-2">
-          <Sparkles className="h-8 w-8 text-blue-600" />
+          <img src="/FoundryLogo.svg" alt="Foundry" className="h-8 w-8" />
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Azure Model Router Demo
+            Foundry Model Router
           </h1>
         </div>
         <p className="text-slate-600 max-w-2xl mx-auto">
@@ -852,7 +896,33 @@ export default function ModelRouterPage() {
                 <Target className="h-4 w-4" />
                 Accuracy Comparison
               </h4>
-              {(selectedScenario || groundTruth.trim().length > 0 || accuracyComparison) ? (
+              {(selectedScenario || groundTruth.trim().length > 0) && routerResult && benchmarkResult && !accuracyComparison ? (
+                <div className="space-y-3">
+                  <Alert className="bg-blue-50 border-blue-200">
+                    <AlertDescription className="text-blue-800">
+                      Both model responses are ready. Click the button below to evaluate accuracy.
+                    </AlertDescription>
+                  </Alert>
+                  <Button 
+                    onClick={handleRunAccuracyComparison}
+                    disabled={accuracyLoading}
+                    className="w-full"
+                    variant="outline"
+                  >
+                    {accuracyLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2" />
+                        Evaluating Accuracy...
+                      </>
+                    ) : (
+                      <>
+                        <Target className="h-4 w-4 mr-2" />
+                        Run Accuracy Comparison
+                      </>
+                    )}
+                  </Button>
+                </div>
+              ) : (selectedScenario || groundTruth.trim().length > 0 || accuracyComparison) ? (
                 accuracyLoading && !accuracyComparison ? (
                   <Card className="w-full">
                     <CardContent className="pt-6 space-y-4">
@@ -882,7 +952,12 @@ export default function ModelRouterPage() {
                     benchmarkEvaluation={accuracyComparison.benchmark.accuracy_evaluation}
                     scenarioId={accuracyComparison.scenario_id}
                   />
-                ) : null
+                ) : (
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded text-center text-sm text-slate-500">
+                    <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p>Submit a prompt to see model responses</p>
+                  </div>
+                )
               ) : (
                 <div className="p-4 bg-slate-50 border border-slate-200 rounded text-center text-sm text-slate-500">
                   <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />

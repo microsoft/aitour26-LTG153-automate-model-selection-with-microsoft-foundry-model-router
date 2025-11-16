@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { ChevronRight, Sparkles, Settings } from "lucide-react";
+import { ChevronRight, Settings } from "lucide-react";
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -38,7 +38,7 @@ const CustomSidebarContent = () => {
       {
         title: "AI Demos",
         url: "#",
-        icon: Sparkles,
+        icon: () => <img src="/FoundryLogo.svg" alt="Foundry" className="h-4 w-4" />,
         items: [
           {
             title: "Model Router Comparison",
@@ -72,8 +72,8 @@ const CustomSidebarContent = () => {
               <SidebarMenuButton size="lg">
                 <div className="flex aspect-square size-8 items-center justify-center">
                   <img 
-                    src="/logo.png" 
-                    alt="Demo Logo"
+                    src="/FoundryLogo.svg" 
+                    alt="Foundry Logo"
                     className="h-full w-full object-contain"
                   />
                 </div>
@@ -142,7 +142,7 @@ const CustomSidebarContent = () => {
         </div>
         <span className="text-gray-400 pl-7">Luca Stamatescu</span>
         <div className="flex items-center gap-2 text-black mt-2">
-          <img src="/logo.png" alt="Azure Logo" className="h-5 w-5" />
+          <img src="/FoundryLogo.svg" alt="Foundry Logo" className="h-5 w-5" />
           <span>Product Group</span>
         </div>
         <span className="text-gray-400 pl-7">Sanjeev Jagtap</span>
