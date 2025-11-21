@@ -13,9 +13,9 @@ If you will be delivering this session, check the [session-delivery-sources](./s
 
 ### Session Description
 
-> Full Title: <br/> **Automate model selection with Azure AI Foundry Model Router - to fast-track cost efficiencies and win big**
+> Full Title: <br/> **Automate model selection with Microsoft Foundry Model Router - to fast-track cost efficiencies and win big**
 
-As 85% of enterprises embrace multi-model AI strategies, developers face growing complexity in selecting, deploying, and managing the right models for each task. In this session, discover how the model router in Azure AI Foundry intelligently automates model selection based on performance, cost, and latency. This intelligent orchestration layer reduces operational overhead, accelerates deployment, and unlocks scalable AI operations across your organization. Say goodbye to model fatigue and let the router do the strategic lifting. 
+As 85% of enterprises embrace multi-model AI strategies, developers face growing complexity in selecting, deploying, and managing the right models for each task. In this session, discover how the model router in Microsoft Foundry intelligently automates model selection based on performance, cost, and latency. This intelligent orchestration layer reduces operational overhead, accelerates deployment, and unlocks scalable AI operations across your organization. Say goodbye to model fatigue and let the router do the strategic lifting. 
 
 
 ### 🧠 Learning Outcomes
@@ -23,13 +23,13 @@ As 85% of enterprises embrace multi-model AI strategies, developers face growing
 By the end of this session, learners will be able to:
 
 - Describe what Model Router does, and why that helps
-- Deploy and use a Model Router in Azure AI Foundry
+- Deploy and use a Model Router in Microsoft Foundry
 - Deploy a benchmark model - and compare their results
 - Analyze the cost and latency optimization achieved
 
 ### 💻 Technologies Used
 
-1. **Azure AI Foundry** - Unified end-to-end AI development platform 
+1. **Microsoft Foundry** - Unified end-to-end AI development platform 
 1. **Model Router** - My primary model deployment (smart router)
 1. **Azure OpenAI Service** - My Benchmark model deployment (GPT-5) 
 1. **React + Vite** - Building the frontend UI/UX
@@ -38,10 +38,10 @@ By the end of this session, learners will be able to:
 ### 🔗 Session Resources
 | Resources          | Links                             | Description        |
 |:-------------------|:----------------------------------|:-------------------|
-| Model Router Card | [Azure AI Foundry Catalog](https://ai.azure.com/catalog/models/model-router) | Supported Models, Overview |
+| Model Router Card | [Microsoft Foundry Catalog](https://ai.azure.com/catalog/models/model-router) | Supported Models, Overview |
 | Model Router Concepts| [Microsoft Learn Docs](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-router) | Benefits & Limitations |
-| Model Router Quickstart| [Microsoft Learn Docs](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/model-router) | Usage in Azure AI Foundry |
-| GPT-5 in Azure AI Foundry | [Microsoft Azure Video](https://www.youtube.com/watch?v=xgdz-KCFpFI&pp=ygUhbW9kZW0gcm91dGVyIGZvciBhenVyZSBhaSBmb3VuZHJ5) | Featuring Model Router |
+| Model Router Quickstart| [Microsoft Learn Docs](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/model-router) | Usage in Microsoft Foundry |
+| GPT-5 in Microsoft Foundry | [Microsoft Azure Video](https://www.youtube.com/watch?v=xgdz-KCFpFI&pp=ygUhbW9kZW0gcm91dGVyIGZvciBhenVyZSBhaSBmb3VuZHJ5) | Featuring Model Router |
 | Additional Resources for this session | [https://learn.microsoft.com](https://learn.microsoft.com?ocid=AITour26_resourcecenter_cnl) | Links specific to this session |
 
 ### 📚 Continued Learning Resources
@@ -97,8 +97,8 @@ Microsoft’s approach to responsible AI is grounded in our AI principles of f
 
 Large-scale natural language, image, and speech models - like the ones used in this sample - can potentially behave in ways that are unfair, unreliable, or offensive, in turn causing harms. Please consult the [Azure OpenAI service Transparency note](https://learn.microsoft.com/legal/cognitive-services/openai/transparency-note?tabs=text) to be informed about risks and limitations.
 
-The recommended approach to mitigating these risks is to include a safety system in your architecture that can detect and prevent harmful behavior. [Azure AI Content Safety](https://learn.microsoft.com/azure/ai-services/content-safety/overview) provides an independent layer of protection, able to detect harmful user-generated and AI-generated content in applications and services. Azure AI Content Safety includes text and image APIs that allow you to detect material that is harmful. Within Azure AI Foundry portal, the Content Safety service allows you to view, explore and try out sample code for detecting harmful content across different modalities. The following [quickstart documentation](https://learn.microsoft.com/azure/ai-services/content-safety/quickstart-text?tabs=visual-studio%2Clinux&pivots=programming-language-rest) guides you through making requests to the service.
+The recommended approach to mitigating these risks is to include a safety system in your architecture that can detect and prevent harmful behavior. [Azure AI Content Safety](https://learn.microsoft.com/azure/ai-services/content-safety/overview) provides an independent layer of protection, able to detect harmful user-generated and AI-generated content in applications and services. Azure AI Content Safety includes text and image APIs that allow you to detect material that is harmful. Within Microsoft Foundry portal, the Content Safety service allows you to view, explore and try out sample code for detecting harmful content across different modalities. The following [quickstart documentation](https://learn.microsoft.com/azure/ai-services/content-safety/quickstart-text?tabs=visual-studio%2Clinux&pivots=programming-language-rest) guides you through making requests to the service.
 
 Another aspect to take into account is the overall application performance. With multi-modal and multi-models applications, we consider performance to mean that the system performs as you and your users expect, including not generating harmful outputs. It's important to assess the performance of your overall application using [Performance and Quality and Risk and Safety evaluators](https://learn.microsoft.com/azure/ai-studio/concepts/evaluation-metrics-built-in). You also have the ability to create and evaluate with [custom evaluators](https://learn.microsoft.com/azure/ai-studio/how-to/develop/evaluate-sdk#custom-evaluators).
 
-You can evaluate your AI application in your development environment using the [Azure AI Evaluation SDK](https://microsoft.github.io/promptflow/index.html). Given either a test dataset or a target, your generative AI application generations are quantitatively measured with built-in evaluators or custom evaluators of your choice. To get started with the azure ai evaluation sdk to evaluate your system, you can follow the [quickstart guide](https://learn.microsoft.com/azure/ai-studio/how-to/develop/flow-evaluate-sdk). Once you execute an evaluation run, you can [visualize the results in Azure AI Foundry portal ](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-flow-results).
+You can evaluate your AI application in your development environment using the [Azure AI Evaluation SDK](https://microsoft.github.io/promptflow/index.html). Given either a test dataset or a target, your generative AI application generations are quantitatively measured with built-in evaluators or custom evaluators of your choice. To get started with the azure ai evaluation sdk to evaluate your system, you can follow the [quickstart guide](https://learn.microsoft.com/azure/ai-studio/how-to/develop/flow-evaluate-sdk). Once you execute an evaluation run, you can [visualize the results in Microsoft Foundry portal ](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-flow-results).
